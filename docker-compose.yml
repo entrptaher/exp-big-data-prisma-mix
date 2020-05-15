@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  # stores the main data for the project, user, site, instance etc.
+  postgres-core:
+    image: postgres
+    environment:
+      POSTGRES_USER: prisma1
+      POSTGRES_PASSWORD: prisma1
+    volumes:
+      - core-data:/var/lib/postgresql/data
+  
+  # stores the raw binary data that prisma1 still cannot handle
+  postgres-content:
+    image: postgres
+    environment:
+      POSTGRES_USER: prisma2
+      POSTGRES_PASSWORD: prisma2
+    volumes:
+      - content-data:/var/lib/postgresql/data
+
+  # the prisma 1 server
+  prisma:
+    image: prismagraphql/prisma:1.34
+    ports:
+    - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          mydb:
+            connector: postgres
+            host: postgres
+            user: prisma
+            password: prisma
+            rawAccess: true
+            port: 5432
+            migrations: true
+volumes:
+  core-data:
+  content-data:
