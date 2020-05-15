@@ -1,0 +1,4 @@
+type Site {
+  id: ID! @id(strategy: AUTO)
+  data: Json
+}

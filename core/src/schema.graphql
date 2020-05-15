@@ -1,0 +1,11 @@
+# import * from '../prisma/generated/prisma.graphql'
+
+type Query {
+  site(id: ID!): Site
+  sites: [Site]
+}
+
+type Mutation {
+  createSite(data: SiteCreateInput): Site!
+  updateSite(data: SiteUpdateInput!, where: SiteWhereUniqueInput!): Site
+}

@@ -30,9 +30,9 @@ services:
         databases:
           mydb:
             connector: postgres
-            host: postgres
-            user: prisma
-            password: prisma
+            host: postgres-core
+            user: prisma1
+            password: prisma1
             rawAccess: true
             port: 5432
             migrations: true
