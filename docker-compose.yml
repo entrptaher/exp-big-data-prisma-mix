@@ -38,14 +38,18 @@ services:
       - content-data:/var/lib/postgresql/data
       - ./init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
 
-  # the prisma 1 server
-  prisma:
-    image: prismagraphql/prisma:1.34
+  # the prisma 1 servers
+  prisma1-manager:
+    image: prismagraphql/prisma-prod:1.34
+    depends_on: 
+      - rabbitmq
     ports:
-    - "4466:4466"
+    - "4467:4466"
     environment:
       PRISMA_CONFIG: |
         port: 4466
+        rabbitUri: amqp://prisma1:prisma1@rabbitmq:5672
+        enableManagementApi: true
         databases:
           mydb:
             connector: postgres
@@ -55,6 +59,42 @@ services:
             rawAccess: true
             port: 5432
             migrations: true
+  prisma1-worker:
+    image: prismagraphql/prisma-prod:1.34
+    deploy:
+      replicas: 3
+    depends_on: 
+      - rabbitmq
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        rabbitUri: amqp://prisma1:prisma1@rabbitmq:5672
+        enableManagementApi: false
+        databases:
+          mydb:
+            connector: postgres
+            host: postgres-core
+            user: prisma1
+            password: prisma1
+            rawAccess: true
+            port: 5432
+            migrations: true
+  prisma:
+    image: nginx
+    ports:
+      - "4466:4466"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+  rabbitmq:
+    image: 'bitnami/rabbitmq:latest'
+    environment:
+      - RABBITMQ_USERNAME=prisma1
+      - RABBITMQ_PASSWORD=prisma1
+      - RABBITMQ_NODE_PORT_NUMBER=5672
+    volumes:
+      - 'rabbitmqstats_data:/bitnami'
+
 volumes:
   core-data:
   content-data:
+  rabbitmqstats_data:

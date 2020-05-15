@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const debug = require('debug')('client');
 
-const endpoint = 'http://localhost:4005';
+const endpoint = 'http://localhost:4000';
 
 const request = ({ query, variables }) => {
   return fetch(endpoint, {
@@ -45,7 +45,7 @@ async function main() {
   const site = await request({ query: CREATE_SITE });
   debug('create');
   
-  const rawData = JSON.stringify(require('./generator')(1, 100));
+  const rawData = JSON.stringify(require('./generator')(1, 1000));
   for(let i=0; i< 1000; i++){
     // this is the raw data for everything
     // debug('generate');
