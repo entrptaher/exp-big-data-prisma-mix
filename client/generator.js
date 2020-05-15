@@ -1,3 +1,4 @@
+// a copy from https://stackoverflow.com/a/1349426/6161265
 function makeid(length) {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

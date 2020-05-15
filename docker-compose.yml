@@ -4,6 +4,8 @@ services:
   # stores the main data for the project, user, site, instance etc.
   postgres-core:
     image: postgres
+    ports: 
+      - '5432:5432'
     environment:
       POSTGRES_USER: prisma1
       POSTGRES_PASSWORD: prisma1
@@ -13,11 +15,14 @@ services:
   # stores the raw binary data that prisma1 still cannot handle
   postgres-content:
     image: postgres
+    ports: 
+      - '5433:5432'
     environment:
       POSTGRES_USER: prisma2
       POSTGRES_PASSWORD: prisma2
     volumes:
       - content-data:/var/lib/postgresql/data
+      - ./init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
 
   # the prisma 1 server
   prisma:
