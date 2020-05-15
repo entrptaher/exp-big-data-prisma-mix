@@ -3,7 +3,7 @@
 docker-compose up
 
 # deploy the prisma1 schema
-yarn workspace core run prisma deploy
+yarn workspace @entrptaher/core run prisma deploy
 
 # run the server
 DEBUG=core yarn workspace @entrptaher/core run dev

@@ -1,6 +1,6 @@
 const { prisma } = require('../../prisma/generated/prisma-client');
 const debug = require('debug')('core');
-const { content } = require('@entrptaher/content');
+const store = require('@entrptaher/content');
 
 // try to parse to json if it comes from playground
 const parseIfString = (data) => {
@@ -23,7 +23,7 @@ const mutation = {
     if (!site) throw new Error('no data found');
 
     // update the content itself if provided
-    const oldContent = await content.query(req.where.id);
+    const oldContent = await store.prisma.query(req.where.id);
     // console.log({ site, oldContent });
     // mimic merging data
     // chance of high cpu usage
@@ -33,7 +33,7 @@ const mutation = {
       parseIfString(req.data && req.data.data)
     );
     debug('merge');
-    const saved = await content.upsert(req.where.id, {Data: newData});
+    const saved = await store.prisma.upsert(req.where.id, {Data: newData});
     // console.log(saved.Data);
     debug('upsert');
 

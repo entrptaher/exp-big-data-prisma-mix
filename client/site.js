@@ -45,7 +45,7 @@ async function main() {
   const site = await request({ query: CREATE_SITE });
   debug('create');
   
-  const rawData = JSON.stringify(require('./generator')(1, 100));
+  const rawData = JSON.stringify(require('./generator')(1, 10000));
   for(let i=0; i< 1000; i++){
     // this is the raw data for everything
     // debug('generate');

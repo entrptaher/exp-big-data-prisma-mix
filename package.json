@@ -4,6 +4,9 @@
     "core",
     "content"
   ],
+  "nodemonConfig": {
+    "ignore": ["**/data"]
+  },
   "scripts": {
     "start": "DEBUG=core yarn workspace @entrptaher/core run dev"
   }

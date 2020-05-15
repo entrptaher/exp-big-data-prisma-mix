@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "nodemon src/index.js"
   },
+  "nodemonConfig": {
+    "ignore": ["**/data"]
+  },
   "dependencies": {
     "@entrptaher/content": "1.0.0",
     "debug": "^4.1.1",
