@@ -1,8 +1,9 @@
-module.exports = generator => {
+// 1 => ~100kb data, 2 => ~200kb data
+module.exports = (limit = 1) => {
   const rawData = {};
   for(let i = 0; i< 1; i++){
     rawData[`page${i}`]={}
-    for(let j = 0; j< 1; j++){
+    for(let j = 0; j< limit; j++){
       rawData[`page${i}`][`group${j}`]=[]
       for(let k = 0; k< 100; k++){
         rawData[`page${i}`][`group${j}`].push({"x": "x".repeat(1000)})

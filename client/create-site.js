@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const debug = require('debug')('client');
+
 const endpoint = 'http://localhost:4005';
 
 const request = ({ query, variables }) => {
@@ -29,18 +31,30 @@ mutation UPDATE_SITE($data: SiteUpdateInput!, $where: SiteWhereUniqueInput!) {
   }
 }`;
 
-const rawData = require('./generator')();
-
 async function main() {
-  // const site = await request({ query: CREATE_SITE });
-  const updatedSite = await request({
-    query: UPDATE_SITE,
-    variables: {
-      where: { id: 'cka8dbsfi00380752t69fziwd' },
-      data: { data: JSON.stringify(rawData) }, // this is the raw data for everything
-    },
-  });
-  console.log(JSON.stringify({ updatedSite }, null, 2))
+  debug('init');
+
+  // create data
+  // 1 => ~100kb data, 2 => ~200kb data
+  const rawData = require('./generator')(1);
+  debug('generate');
+  
+  // create site without any data
+  const site = await request({ query: CREATE_SITE });
+  debug('create');
+  
+  for(let i=0; i< 1000; i++){
+    // update the site with new data
+    const updatedSite = await request({
+      query: UPDATE_SITE,
+      variables: {
+        where: { id: site.data.createSite.id },
+        data: { data: JSON.stringify(rawData) }, // this is the raw data for everything
+      },
+    });
+    debug('update');
+  }
+  // console.log(JSON.stringify({ updatedSite }, null, 2))
 }
 
 main();
