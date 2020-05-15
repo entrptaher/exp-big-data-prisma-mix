@@ -1,5 +1,6 @@
 const { prisma } = require('../../prisma/generated/prisma-client');
 const debug = require('debug')('core');
+const { content } = require('@entrptaher/content')
 
 // try to parse to json if it comes from playground
 const parseIfString = (data) => {
@@ -15,7 +16,7 @@ const mutation = {
   },
   async updateSite(_, req, context) {
     debug('init');
-    
+
     const oldData = await prisma.site(req.where);
     debug('old data');
 

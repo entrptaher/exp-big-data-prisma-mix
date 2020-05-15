@@ -1,5 +1,6 @@
 {
-  "name": "core",
+  "name": "@entrptaher/core",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -7,12 +8,13 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
+    "@entrptaher/content": "1.0.0",
     "debug": "^4.1.1",
     "graphql-yoga": "1.18.3",
     "node-fetch": "^2.6.0",
-    "prisma-client-lib": "1.34.10",
+    "nodemon": "^2.0.4",
     "prisma": "1.34.10",
-    "nodemon": "^2.0.4"
+    "prisma-client-lib": "1.34.10"
   },
   "resolutions": {
     "graphql": "^14.0.2"
