@@ -1,4 +1,10 @@
 {
   "private": true,
-  "workspaces": ["core", "content"]
+  "workspaces": [
+    "core",
+    "content"
+  ],
+  "scripts": {
+    "start": "DEBUG=core yarn workspace @entrptaher/core run dev"
+  }
 }

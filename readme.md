@@ -6,7 +6,7 @@ docker-compose up
 yarn workspace core run prisma deploy
 
 # run the server
-DEBUG=core yarn workspace core run dev
+DEBUG=core yarn workspace @entrptaher/core run dev
 
 # run the client from a terminal to trigger create and update task
 # it will create once and update 1000 times
