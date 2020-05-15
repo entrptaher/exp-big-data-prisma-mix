@@ -12,7 +12,7 @@ const mutation = {
     // create a site and add content to a different store by the id
     return prisma.createSite({
       ...req.data,
-      data: parseIfString(req.data && req.data.data),
+      data: {},//parseIfString(req.data && req.data.data),
     });
   },
   async updateSite(_, req, context) {
@@ -35,6 +35,7 @@ const mutation = {
     debug('merge');
     const saved = await content.upsert(req.where.id, {Data: newData});
     // console.log(saved.Data);
+    debug('upsert');
 
     // update everything else
     const result = await prisma.updateSite({

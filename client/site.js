@@ -45,8 +45,8 @@ async function main() {
   const site = await request({ query: CREATE_SITE });
   debug('create');
   
-  const rawData = JSON.stringify(require('./generator')(1, 200));
-  for(let i=0; i< 10000; i++){
+  const rawData = JSON.stringify(require('./generator')(1, 100));
+  for(let i=0; i< 1000; i++){
     // this is the raw data for everything
     // debug('generate');
 
@@ -61,6 +61,7 @@ async function main() {
     });
     debug('update');
   }
+  console.log(site.data.createSite.id);
   // console.log(JSON.stringify({ updatedSite }, null, 2))
 }
 
