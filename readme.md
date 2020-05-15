@@ -1,11 +1,19 @@
 ```sh
+# Run database and prisma
 docker-compose up
+
+# deploy the prisma1 schema
 yarn workspace core run prisma deploy
+
+# run the server
 yarn workspace core run dev
+
+# run the client from a terminal to trigger create and update task
+node client/site.js
 ```
 
 The goal is to have a structure like this where we can update the Site.data over and over without hanging prisma.
-```
+```js
 {
   Site: {
     data: {
