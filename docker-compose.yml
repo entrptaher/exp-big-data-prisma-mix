@@ -1,5 +1,19 @@
 version: '3'
 services:
+  web:
+    build: .
+    command: yarn run start
+    deploy:
+      replicas: 3
+
+  lb:
+    image: dockercloud/haproxy
+    ports:
+      - 4000:80
+    links:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   # stores the main data for the project, user, site, instance etc.
   postgres-core:

@@ -1,6 +1,8 @@
 ```sh
 # Run database and prisma
 docker-compose up
+docker-compose --compatibility up
+docker-compose --compatibility up --build -d --force-recreate web
 
 # deploy the prisma1 schema
 yarn workspace core run prisma deploy

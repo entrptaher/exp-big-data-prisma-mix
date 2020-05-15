@@ -17,7 +17,7 @@ const server = new GraphQLServer({
   }),
 });
 
-const port = 4005;
+const port = 80;
 server.start(
   {
     port,
