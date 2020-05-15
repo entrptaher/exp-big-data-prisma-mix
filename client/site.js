@@ -45,8 +45,8 @@ async function main() {
   const site = await request({ query: CREATE_SITE });
   debug('create');
   
-  const rawData = JSON.stringify(require('./generator')(1, 100));
-  for(let i=0; i< 10; i++){
+  const rawData = JSON.stringify(require('./generator')(1, 200));
+  for(let i=0; i< 10000; i++){
     // this is the raw data for everything
     // debug('generate');
 
@@ -55,8 +55,8 @@ async function main() {
       query: UPDATE_SITE,
       variables: {
         where: { id: site.data.createSite.id },
-
         data: { data: rawData }, 
+        // data: { data: "{}" }, // empty data
       },
     });
     debug('update');
