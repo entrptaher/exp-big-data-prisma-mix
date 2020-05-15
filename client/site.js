@@ -35,21 +35,28 @@ async function main() {
   debug('init');
 
   // create data
-  // 1 => ~100kb data, 2 => ~200kb data
-  const rawData = require('./generator')(1);
-  debug('generate');
+  // 1, 1 => ~1kb data
+  // 1, 10 => ~10kb data
+  // 1, 100 => ~100kb data
+  // 1, 200 => ~200kb data
+  // 2, 100 => ~200kb data
   
   // create site without any data
   const site = await request({ query: CREATE_SITE });
   debug('create');
   
-  for(let i=0; i< 1000; i++){
+  const rawData = JSON.stringify(require('./generator')(1, 100));
+  for(let i=0; i< 10; i++){
+    // this is the raw data for everything
+    // debug('generate');
+
     // update the site with new data
-    const updatedSite = await request({
+    await request({
       query: UPDATE_SITE,
       variables: {
         where: { id: site.data.createSite.id },
-        data: { data: JSON.stringify(rawData) }, // this is the raw data for everything
+
+        data: { data: rawData }, 
       },
     });
     debug('update');

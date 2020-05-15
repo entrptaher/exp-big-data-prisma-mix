@@ -6,10 +6,11 @@ docker-compose up
 yarn workspace core run prisma deploy
 
 # run the server
-yarn workspace core run dev
+DEBUG=core yarn workspace core run dev
 
 # run the client from a terminal to trigger create and update task
-node client/site.js
+# it will create once and update 1000 times
+DEBUG=client nodemon client/site.js
 ```
 
 The goal is to have a structure like this where we can update the Site.data over and over without hanging prisma.

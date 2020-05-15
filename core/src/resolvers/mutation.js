@@ -1,4 +1,5 @@
 const { prisma } = require('../../prisma/generated/prisma-client');
+const debug = require('debug')('core');
 
 // try to parse to json if it comes from playground
 const parseIfString = (data) => {
@@ -13,7 +14,11 @@ const mutation = {
     });
   },
   async updateSite(_, req, context) {
+    debug('init');
+    
     const oldData = await prisma.site(req.where);
+    debug('old data');
+
     // mimic merging data
     // chance of high cpu usage
     const newData = Object.assign(
@@ -21,10 +26,15 @@ const mutation = {
       oldData.data,
       parseIfString(req.data && req.data.data)
     );
-    return prisma.updateSite({
+    debug('merge');
+
+    const result = await prisma.updateSite({
       where: req.where,
       data: { ...req.data, data: newData },
     });
+    debug('result');
+    
+    return result;
   },
 };
 
